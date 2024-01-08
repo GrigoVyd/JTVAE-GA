@@ -45,7 +45,6 @@ def tensorize(smiles, assm=True):
     del mol_tree.mol
     for node in mol_tree.nodes:
         del node.mol
-
     return mol_tree
 
 def tensorize_prop(smiles, assm=True):
@@ -89,6 +88,8 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--prop", dest="prop",type=bool,default=False)
     parser.add_argument("-n", "--split", dest="nsplits", type=int, default=10)
     parser.add_argument("-j", "--ncpu", dest="ncpu", type=int, default=8)
+    parser.add_argument("-o", "--output", dest="output_path", type=str, default="./")
+
     args = parser.parse_args()
     args.ncpu = int(args.ncpu)
 
@@ -113,7 +114,8 @@ if __name__ == "__main__":
     for split_id in range(num_splits):
         st = split_id * le
         sub_data = all_data[st : st + le]
-
-        with open('tensors-%d.pkl' % split_id, 'wb') as f:
+        if not os.path.exists(args.output_path):
+            os.mkdir(args.output_path)
+        with open(os.path.join(args.output_path, 'tensors-%d.pkl' % split_id), 'wb') as f:
             pickle.dump(sub_data, f, pickle.HIGHEST_PROTOCOL)
 

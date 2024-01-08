@@ -24,7 +24,8 @@ import rdkit
 from timeit import default_timer as timer
 import datetime
 
-from buchiutils.train_utils import save_train_hyper_csv,save_train_progress
+sys.path.append('%s/../buchiutils/' % os.path.dirname(os.path.realpath(__file__)))
+from train_utils import save_train_hyper_csv,save_train_progress
 
 lg = rdkit.RDLogger.logger() 
 lg.setLevel(rdkit.RDLogger.CRITICAL)
@@ -123,7 +124,7 @@ for epoch in range(args.epoch):
             else:
                 iter_time = stop_timer - last_timer
             print("[%d] Beta: %.3f, Loss: %.5f, KL: %.2f, Word: %.2f, Topo: %.2f, Assm: %.2f, PNorm: %.2f, GNorm: %.2f, Iter Time: %.2f, Epoch Time: %s, Elap Time: %s" % (total_step, beta, meters[0], meters[1], meters[2], meters[3], meters[4], param_norm(model), grad_norm(model),iter_time,str(datetime.timedelta(seconds=stop_timer - epoch_timer)), str(datetime.timedelta(seconds=stop_timer - start_timer))))
-            progress_info = {'total_step':total_step, 'epoch': epoch, 'Beta':beta, 'Loss':meters[0], 'KL':meters[1], 'Word':meters[2], 'Topo': meters[3], 'Assm':meters[4], 'Prop':meters[5], 'PNorm': param_norm(model), 'GNorm':grad_norm(model), 'iter_time':iter_time, 'epoch_time':datetime.timedelta(seconds=stop_timer - epoch_timer),'elap_time':datetime.timedelta(seconds=stop_timer - start_timer),'lr':scheduler.get_last_lr()[0]}
+            progress_info = {'total_step':total_step, 'epoch': epoch, 'Beta':beta, 'Loss':meters[0], 'KL':meters[1], 'Word':meters[2], 'Topo': meters[3], 'Assm':meters[4], 'PNorm': param_norm(model), 'GNorm':grad_norm(model), 'iter_time':iter_time, 'epoch_time':datetime.timedelta(seconds=stop_timer - epoch_timer),'elap_time':datetime.timedelta(seconds=stop_timer - start_timer),'lr':scheduler.get_last_lr()[0]}
             save_train_progress(progress_info, '%s/train_progress_%s.csv'%(args.save_dir,dt_nowstr), reset= bool(total_step == args.print_iter))
             sys.stdout.flush()
             meters *= 0

@@ -24,7 +24,8 @@ import rdkit
 from timeit import default_timer as timer
 import datetime
 
-from buchiutils.train_utils import save_train_hyper_csv,save_train_progress
+sys.path.append('%s/../buchiutils/' % os.path.dirname(os.path.realpath(__file__)))
+from train_utils import save_train_hyper_csv,save_train_progress
 
 lg = rdkit.RDLogger.logger() 
 lg.setLevel(rdkit.RDLogger.CRITICAL)

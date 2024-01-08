@@ -20,7 +20,7 @@ from __future__ import print_function
 from rdkit import Chem
 from rdkit.Chem import rdMolDescriptors
 import pickle
-from rdkit.six import items
+from rdkit.six import iteritems
 
 import math
 from collections import defaultdict
@@ -54,7 +54,7 @@ def calculateScore(m):
   fps = fp.GetNonzeroElements()
   score1 = 0.
   nf = 0
-  for bitId,v in items(fps):
+  for bitId,v in iteritems(fps):
     nf += v
     sfp = bitId
     score1 += _fscores.get(sfp,-4)*v

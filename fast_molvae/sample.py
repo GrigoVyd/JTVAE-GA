@@ -7,7 +7,8 @@ import os
 import sys
 sys.path.append('%s/../fast_jtnn/' % os.path.dirname(os.path.realpath(__file__)))
 from mol_tree import Vocab, MolTree
-from jtnn_vae import JTNNVAE, JTPropVAE
+from jtnn_vae import JTNNVAE
+from jtprop_vae import JTPropVAE
 from jtnn_enc import JTNNEncoder
 from jtmpn import JTMPN
 from mpn import MPN
